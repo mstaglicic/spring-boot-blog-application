@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog :: Update Post</title>
+</head>
+<body>
+<div class="container">
+  <a th:href="@{/posts/}">Homepage</a>
+
+  <form action="#" th:action="@{'/posts/' + ${post.id} + '/updatePost'}" th:object="${post}" method="post">
+    <input type="text" th:field="*{userAccount}" />
+    <input type="hidden" th:field="*{createdAt}" />
+    <h2>Update post</h2>
+    <div>
+      <label for="new-post-title">Title</label>
+      <input id="new-post-title" type="text" th:field="*{title}" placeholder="Title"/>
+    </div>
+
+    <div>
+      <label for="new-post-content">Content</label>
+      <input id="new-post-content" type="text" th:field="*{content}" placeholder="Write your post here"/>
+    </div>
+
+    <button type="submit">Update</button>
+
+  </form>
+</div>
+
+</body>
+</html>

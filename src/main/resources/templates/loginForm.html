@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Tiny Blog</title>
+</head>
+<body>
+<div class="container">
+    <h1>Tini Blog - Login</h1>
+    <hr/>
+
+    <form action="#" th:action="@{/posts/login}" method="post">
+        <div class="form">
+            <label for="email">Email</label>
+            <input id="email" type="text" name="email" placeholder="Email"/>
+        </div>
+        <div class="form">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Password"/>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+
+    <p>Not registered yet? Please <a th:href="@{/posts/register}">register</a></p>
+
+<a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
+</div>
+</body>
+</html>

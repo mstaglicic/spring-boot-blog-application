@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tiny Blog - Homepage</title>
+
+<p><a th:href="@{/posts/register}">Register</a> - <a th:href="@{/posts/login}">Login</a></p>
+</head>
+    <body>
+        <div class="container">
+            <h1> Tiny Blog Posts</h1>
+            <hr/>
+            <p><a th:href="@{/posts/newpost}">Write a new post</a></p>
+            <div class="post-container">
+                <div th:each="post: ${posts}">
+                    <h5 th:text="${post.userAccount.firstName}">Username</h5>
+                    <h2><a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}">Title of post goes here</a></h2>
+                    <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>
+                    <p th:text="${post.content}">Post content text goes here</p>
+                    <hr/>
+
+                </div>
+            </div>
+        </div>
+
+
+    </body>
+</html>

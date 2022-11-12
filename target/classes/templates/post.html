@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title} + ' - Tiny Blog'">Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="post">
+        <h5 th:text="${post.userAccount.firstName}">Username</h5>
+        <h2 th:text="${post.title}">Title goes here</h2>
+        <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>
+        <p th:text="${post.content}">Post content text goes here</p>
+
+    </div>
+
+</div>
+<a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
+<a th:href="@{'/posts/' + ${post.id} + '/updatePost'}">Edit</a>
+<a th:href="@{'/posts/' + ${post.id} + '/deletePost'}">Delete</a>
+</body>
+</html>
