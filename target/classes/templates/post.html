@@ -10,6 +10,7 @@
         <h5 th:text="${post.userAccount.firstName}">Username</h5>
         <h2 th:text="${post.title}">Title goes here</h2>
         <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>
+        <p th:text="'Updated ' + ${post.updatedAt}">Update date goes here</p>
         <p th:text="${post.content}">Post content text goes here</p>
 
     </div>

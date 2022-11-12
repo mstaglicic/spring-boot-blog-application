@@ -5,9 +5,10 @@ import com.brightstraining.springbootblogapplication.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Null;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -23,9 +24,11 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void savePost(Post post) {
-//        if (post.getId() == Long.MIN_VALUE) {      //if post does not exist, have no id value
-            post.setCreatedAt(LocalDateTime.now());   //give it now time
-//        }
+       if (post.getId() == 0) {//if post does not exist, have no id value
+
+           post.setCreatedAt(LocalDateTime.now());   //give it now time
+       }
+        post.setUpdatedAt(LocalDateTime.now());   //give it update time
         this.postRepository.save(post);
     }
 
