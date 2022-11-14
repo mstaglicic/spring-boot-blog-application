@@ -15,6 +15,7 @@ public class HomeController {
     @Autowired
     private PostService postService;
 
+
     //listing of all posts, see later if that is going to be the homepage or something different
     @GetMapping("/posts")  //home page, will show  all posts
     public String home(Model model) {

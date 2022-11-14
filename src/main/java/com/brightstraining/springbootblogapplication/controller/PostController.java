@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +27,7 @@ public class PostController {
     private UserAccountService userAccountService;
     //private UserAccountServiceImpl userAccountServiceImpl;
 
+    //looking at noe post
     @GetMapping("/posts/{id}")   //dynamic url to see single post
     public String getPost(@PathVariable Long id, Model model) {
         //search post by id
@@ -40,10 +42,10 @@ public class PostController {
         return "notfound";  //case if post does not exist
     }
 
+    //connecting posts to accounts
     //hardcoding one userAccount to connect with posts
     @GetMapping("/posts/newpost")
     public String createNewPost(Model model) {
-        // mail as admin to test update/delete
         Optional<UserAccount> optionalUserAccount = userAccountService.findOneByEmail("mstaglicic@hotmail.com");
         if (optionalUserAccount.isPresent()) {
             Post post = new Post();
@@ -56,12 +58,21 @@ public class PostController {
         }
     }
 
+
+
+    //saving new post
     @PostMapping("/posts/newpost")
-    public String saveNewPost(@ModelAttribute Post post) {
+    public String saveNewPost(@Valid @ModelAttribute Post post,
+                              BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "newPost";
+        }
         postService.savePost(post);
         return "redirect:/posts/" + post.getId();   //after saving go to that post url
     }
 
+
+    //retrieve post for update
     @GetMapping("/posts/{id}/updatePost")
     public String updatePost (@PathVariable(value="id") long id, Model model) {
         Optional<Post> optionalPost = Optional.ofNullable(postService.getPostById(id));
@@ -71,34 +82,44 @@ public class PostController {
             return "updatePost";
         }
         else {
-            return "not found";
+            return "notfound";
         }
     }
 
+
+    //updating post
     @PostMapping("/posts/{id}/updatePost")
-    public String updatePost (@PathVariable(value="id") long id, Post post, BindingResult result, Model model) {
+    public String updatePost (@PathVariable(value="id") long id, Post post,
+                              BindingResult bindingResult, Model model) {
+
         Optional<Post> optionalPost = Optional.ofNullable(postService.getPostById(id));
+
         if (optionalPost.isPresent()) {
             Post existingPost = optionalPost.get();
             existingPost.setTitle(post.getTitle());
             existingPost.setContent(post.getContent());
+
 
             postService.savePost(existingPost);
         }
         return "redirect:/posts/" + post.getId();
     }
 
+
+    //retrieve post for deletion
     @GetMapping("/posts/{id}/deletePost")
     public String deletePost (@PathVariable Long id) {
         Optional<Post> optionalPost = Optional.ofNullable(postService.getPostById(id));
-        if(optionalPost.isPresent()) {
+        if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
 
             postService.deletePostById(id);
             return "redirect:/posts";
         } else {
-            return "not_found";
+            return "notfound";
         }
+
     }
+
 
 }

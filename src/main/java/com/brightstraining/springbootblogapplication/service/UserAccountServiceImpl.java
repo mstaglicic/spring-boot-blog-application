@@ -53,4 +53,7 @@ public class UserAccountServiceImpl implements UserAccountService {
     public Optional<UserAccount> findOneByEmail(String email) {
         return userAccountRepository.findOneByEmail(email);
     }
+
+
+
 }
