@@ -2,6 +2,9 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Register - Tiny Blog</title>
 </head>
 <body>
@@ -11,29 +14,34 @@
 <form action="#" th:action="@{/posts/register}" th:object="${userAccount}" method="post">
     <div class="form">
         <label for="firstname">First Name</label>
-        <input id="firstname" type="text" th:field="*{firstName}" placeholder="First Name"/>
+        <input id="firstname" type="text" th:field="*{firstName}" placeholder="First Name" class="loginform"/>
+            <p class="warning" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
     </div>
 
     <div class="form">
         <label for="lastname">Last Name</label>
-        <input id="lastname" type="text" th:field="*{lastName}" placeholder="Last Name"/>
+        <input id="lastname" type="text" th:field="*{lastName}" placeholder="Last Name" class="loginform"/>
+            <p class="warning" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
     </div>
 
     <div class="form">
         <label for="username">UserName</label>
-        <input id="username" type="text" th:field="*{userName}" placeholder="UsernNme"/>
+        <input id="username" type="text" th:field="*{userName}" placeholder="UserName" class="loginform"/>
+            <p class="warning" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></p>
     </div>
 
     <div class="form">
         <label for="email">Email</label>
-        <input id="email" type="text" th:field="*{email}" placeholder="Email"/>
+        <input id="email" type="text" th:field="*{email}" placeholder="Email" class="loginform"/>
+            <p class="warning"th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
     </div>
 
     <div class="form">
         <label for="password">Password</label>
-        <input id="password" type="text" th:field="*{password}" placeholder="Password"/>
+        <input id="password" type="text" th:field="*{password}" placeholder="Password" class="loginform"/>
+             <p class="warning"th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
     </div>
-    <button type="submit">Register</button>
+    <button type="submit" class="button">Register</button>
 </form>
 
 

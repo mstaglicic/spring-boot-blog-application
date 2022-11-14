@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
+    <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Blog :: Update Post</title>
+  <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <title>Update Post - Tiny Blog</title>
+
 </head>
 <body>
 <div class="container">
-  <a th:href="@{/posts/}">Homepage</a>
+  <a th:href="@{/posts/}" class="ahrefbutton">Homepage</a>
 
   <form action="#" th:action="@{'/posts/' + ${post.id} + '/updatePost'}" th:object="${post}" method="post">
-    <input type="text" th:field="*{userAccount}" />
+    <input type="hidden" th:field="*{userAccount}" />
     <input type="hidden" th:field="*{createdAt}" />
     <h2>Update post</h2>
     <div>
       <label for="new-post-title">Title</label>
-      <input id="new-post-title" type="text" th:field="*{title}" placeholder="Title"/>
+      <input id="new-post-title" type="text" th:field="*{title}" placeholder="Title" size="150" class="textareatitle"/>
     </div>
 
     <div>
-      <label for="new-post-content">Content</label>
-      <input id="new-post-content" type="text" th:field="*{content}" placeholder="Write your post here"/>
+      <label for="new-post-summary">Short summary</label><br>
+      <!--        <input id="new-post-summary" type="text" th:field="*{summary}" placeholder="Short summary" class="textarea"/>-->
+      <textarea id="new-post-summary" th:field="*{summary}" placeholder="Write your short summary here" name="new-post-summary" rows="5" cols="100" class="textareasummary">
+        </textarea>
+      <br>
+      <label for="new-post-content">Post Content</label><br>
+
+      <!--        <input id="new-post-content" type="text" th:field="*{content}" placeholder="Write your post here" class="textarea"/>-->
+      <textarea id="new-post-content" th:field="*{content}" placeholder="Write your post here" name="new-post-content" rows="15" cols="100" class="textarea">
+        </textarea>
     </div>
 
-    <button type="submit">Update</button>
+    <button type="submit" class="button">Update</button>
 
   </form>
 </div>

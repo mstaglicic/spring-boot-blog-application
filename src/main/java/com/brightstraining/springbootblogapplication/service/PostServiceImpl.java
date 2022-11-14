@@ -23,7 +23,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public void savePost(Post post) {
-       if (post.getId() == Long.MIN_VALUE) {      //if post does not exist, have no id value
+       if (post.getId() == null) {      //if post does not exist, have no id value
             post.setCreatedAt(LocalDateTime.now());   //give it now time
        }
         post.setUpdatedAt(LocalDateTime.now());   //give it update time if exists

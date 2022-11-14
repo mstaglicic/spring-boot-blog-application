@@ -1,23 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title th:text="${post.title} + ' - Tiny Blog'">Title</title>
 </head>
 <body>
 <div class="container">
-    <div class="post">
-        <h5 th:text="${post.userAccount.firstName}">Username</h5>
-        <h2 th:text="${post.title}">Title goes here</h2>
-        <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>
-        <p th:text="'Updated ' + ${post.updatedAt}">Update date goes here</p>
-        <p th:text="${post.content}">Post content text goes here</p>
+    <div class="leftcolumn">
+        <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/posts/register}" class="ahrefbutton">Register</a> <a th:href="@{/posts/login}" class="ahrefbutton">Login</a>
+        </div>
 
-    </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>
+            <div class="float: right">
+                <form th:action="@{/posts/logout}" method="POST">
+                    <label>Hi, <span sec:authentication="name">Username</span></label>
+                    <button type="submit" class="button">Logout</button>
+                </form>
+            </div>
+        </div>
 
+
+        <div class="post">
+            <h2 th:text="${post.title}">Title goes here</h2>
+            <p th:text="'Created by ' + ${post.userAccount.firstName}" class="meta-info-author">Creator data goes here</p>
+    <!--        <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>-->
+            <p th:text="'Published ' + ${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}"  class="meta-info-date">Creation date goes here</p><br>
+            <p th:text="'Updated ' + ${#temporals.format(post.updatedAt, 'dd.MM.yyyy HH:mm')}"  class="meta-info-date">Update date goes here</p><br>
+
+    <!--        <p th:text="${post.content}">Post content text goes here</p>-->
+            <pre th:text="${post.content}">Post content text goes here</pre>
+
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{'/posts/' + ${post.id} + '/updatePost'}" class="ahrefbutton">Edit</a>
+                <a th:href="@{'/posts/' + ${post.id} + '/deletePost'}" class="ahrefbutton">Delete</a>
+            </div>
+            <div class="comments">
+                <h2>Comments</h2>
+                <div class="comment" th:each="comment : ${post.comments}">
+                    <h5 th:text="'Commented on ' + ${#dates.format(post.creationDate, 'yyyy-MM-dd')} + ' by ' + ${comment.user.username}">Comment date and by whom</h5>
+                    <p th:text="${comment.body}">Body</p>
+                </div>
+            </div>
+            <div class="align-center">
+                <a th:href="@{'/posts/{id}/comment'(id=${post.id})}">
+                    <button class="green-btn" type="button">Comment Post</button>
+                </a>
+            </div>
+
+        </div>
+        <a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
+
+<!--<a th:href="@{'/posts/' + ${post.id} + '/updatePost'}" class="ahrefbutton">Edit</a>-->
+<!--<a th:href="@{'/posts/' + ${post.id} + '/deletePost'}" class="ahrefbutton">Delete</a>-->
+
+        </div>
 </div>
-<a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
-<a th:href="@{'/posts/' + ${post.id} + '/updatePost'}">Edit</a>
-<a th:href="@{'/posts/' + ${post.id} + '/deletePost'}">Delete</a>
 </body>
 </html>

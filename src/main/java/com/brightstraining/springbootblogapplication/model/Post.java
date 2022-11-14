@@ -1,19 +1,25 @@
 package com.brightstraining.springbootblogapplication.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-
+import java.util.Collection;
+import java.util.Set;
+@Data
 @Entity
 @Table(name = "posts")   //will create table in mysql
 public class Post {
 
     @Id  //this will be primary key
     @GeneratedValue(strategy = GenerationType.SEQUENCE)   //will be generated in database automatically
-    private long id;
+    @Column(name = "id")
+    private Long id;
     @NotEmpty(message="Title cannot be empty")
     @NotNull
+    @Column(name = "title", nullable = false)
     private String title;    //title of the post
     @Column(columnDefinition = "TEXT")
     private String content;  // entire text of the post
@@ -23,15 +29,23 @@ public class Post {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch= FetchType.EAGER)
+    private Collection<Comment> comments;
+
     @ManyToOne
     @JoinColumn(name = "userAccount_id", referencedColumnName="id")
     private UserAccount userAccount;
+
+    public Post(Set<Comment> comments) {
+
+        this.comments = comments;
+    }
 
     public Post() {
 
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -85,5 +99,11 @@ public class Post {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" + "id=" + id + ", title='" + title + "'" + ", content='" + content
+                + "'" + ", createdAt='" + createdAt + "'" + ", updatedAt'" + updatedAt + "'" + "}";
     }
 }

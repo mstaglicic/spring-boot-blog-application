@@ -1,29 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
     <title>Tiny Blog - Homepage</title>
 
-<p><a th:href="@{/posts/register}">Register</a> - <a th:href="@{/posts/login}">Login</a></p>
+
 </head>
     <body>
         <div class="container">
-            <h1> Tiny Blog Posts</h1>
+            <div class="leftcolumn">
+                <div sec:authorize="!isAuthenticated()">
+            <a th:href="@{/posts/register}" class="ahrefbutton">Register</a> <a th:href="@{/posts/login}" class="ahrefbutton">Login</a>
+<!--                    <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>-->
+                </div>
+<!--                <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>-->
+
+                <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>
+                    <div class="float: right">
+                    <form th:action="@{/posts/logout}" method="POST">
+                            <label>Hi, <span sec:authentication="name">Username</span></label>
+                        <button type="submit" class="button">Logout</button>
+                    </form>
+                    </div>
+                </div>
+
+
+            <div class="header">
+                <h1> Tiny Blog Posts</h1>
+            </div>
             <hr/>
-            <p><a th:href="@{/posts/newpost}">Write a new post</a></p>
+
             <div class="post-container">
-                <div th:each="post: ${posts}">
-                    <h5 th:text="${post.userAccount.firstName}">Username</h5>
+                <div th:each="post: ${posts}" class="post">
                     <h2><a th:href="@{'/posts/' + ${post.id}}" th:text="${post.title}">Title of post goes here</a></h2>
-                    <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>
-                    <p th:text="'Updated ' + ${post.updatedAt}">Update date goes here</p>
-                    <p th:text="${post.content}">Post content text goes here</p>
+                    <p th:text="'Created by ' + ${post.userAccount.firstName}" class="meta-info-author">Creator data goes here</p>
+<!--                    <p th:text="'Published ' + ${post.createdAt}">Creation date goes here</p>-->
+                    <p th:text="'Published ' + ${#temporals.format(post.createdAt, 'dd.MM.yyyy HH:mm')}" class="meta-info-date">Creation date goes here</p><br>
+                    <p th:text="'Updated ' + ${#temporals.format(post.updatedAt, 'dd.MM.yyyy HH:mm')}" class="meta-info-date">Update date goes here</p><br>
+
+                    <pre th:text="${post.summary}" class="post-content">Post content text goes here</pre>
+                    <a th:href="@{'/posts/' + ${post.id}}">Continue reading</a>
+<!--                    <p th:text="${post.content}" class="post-content">Post content text goes here</p>-->
                     <hr/>
 
                 </div>
             </div>
+
         </div>
 
+ </div>
 
     </body>
 </html>

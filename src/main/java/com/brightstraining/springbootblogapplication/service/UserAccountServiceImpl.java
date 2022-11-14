@@ -1,18 +1,28 @@
 package com.brightstraining.springbootblogapplication.service;
 
+import com.brightstraining.springbootblogapplication.model.Authority;
 import com.brightstraining.springbootblogapplication.model.UserAccount;
+import com.brightstraining.springbootblogapplication.repository.AuthorityRepository;
 import com.brightstraining.springbootblogapplication.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserAccountServiceImpl implements UserAccountService {
 
     @Autowired
     private UserAccountRepository userAccountRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @Override
     public List<UserAccount> getAllUsers() {
@@ -21,6 +31,16 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public void saveUser(UserAccount userAccount) {
+        if (userAccount.getId() == null) {
+            if (userAccount.getAuthorities().isEmpty()) {
+                Set<Authority> authorities = new HashSet<>();
+                authorityRepository.findById("ROLE_USER").ifPresent(authorities::add);
+                userAccount.setAuthorities(authorities);
+            }
+        }
+
+
+        userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         this.userAccountRepository.save(userAccount);
     }
 
