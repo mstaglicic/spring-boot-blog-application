@@ -4,7 +4,9 @@ import com.brightstraining.springbootblogapplication.model.Post;
 import com.brightstraining.springbootblogapplication.model.UserAccount;
 import com.brightstraining.springbootblogapplication.service.PostService;
 import com.brightstraining.springbootblogapplication.service.UserAccountService;
+import com.brightstraining.springbootblogapplication.service.UserAccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +19,14 @@ import java.util.Optional;
 
 @Controller
 @SessionAttributes("post")
-
-
 public class PostController {
 
+    @Autowired
     private PostService postService;
-    private UserAccountService userAccountService;
 
     @Autowired
-    public PostController(PostService postService, UserAccountService userAccountService) {
-        this.postService = postService ;
-        this.userAccountService = userAccountService;
-    }
+    private UserAccountService userAccountService;
+    //private UserAccountServiceImpl userAccountServiceImpl;
 
     //looking at noe post
     @GetMapping("/posts/{id}")   //dynamic url to see single post
@@ -46,7 +44,7 @@ public class PostController {
     }
 
     //connecting posts to accounts
-    //hardcoding one userAccount to connect with posts
+    //hardcoding one userAccount to connect with posts - changed to authUsername
     @GetMapping("/posts/newpost")
     public String createNewPost(Model model, Principal principal) {
 
@@ -99,7 +97,8 @@ public class PostController {
 
     //updating post
     @PostMapping("/posts/{id}/updatePost")
-    @PreAuthorize("isAuthenticated()")
+    @Secured({"ROLE_ADMIN"})
+    //@PreAuthorize("isAuthenticated()")
     public String updatePost (@PathVariable(value="id") long id, Post post,
                               BindingResult bindingResult, Model model) {
 
@@ -119,8 +118,8 @@ public class PostController {
 
     //retrieve post for deletion
     @GetMapping("/posts/{id}/deletePost")
-    @PreAuthorize("isAuthenticated()")
-    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+
+    @Secured({"ROLE_ADMIN"})
     public String deletePost (@PathVariable Long id) {
         Optional<Post> optionalPost = Optional.ofNullable(postService.getPostById(id));
         if (optionalPost.isPresent()) {

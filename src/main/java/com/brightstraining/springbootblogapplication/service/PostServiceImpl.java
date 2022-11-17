@@ -3,6 +3,7 @@ package com.brightstraining.springbootblogapplication.service;
 import com.brightstraining.springbootblogapplication.model.Post;
 import com.brightstraining.springbootblogapplication.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        return postRepository.findAll(Sort.by(Sort.Direction.DESC,"createdAt"));
     }
 
     @Override
@@ -38,9 +39,6 @@ public class PostServiceImpl implements PostService{
         if (optional.isPresent()) {
             post = optional.get();
         }
-//        else {
-//            throw new RuntimeException("Post not found with that id: " + id);
-//        }
         return post;
     }
 

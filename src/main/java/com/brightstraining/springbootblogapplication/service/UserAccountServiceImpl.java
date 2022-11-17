@@ -5,6 +5,7 @@ import com.brightstraining.springbootblogapplication.model.UserAccount;
 import com.brightstraining.springbootblogapplication.repository.AuthorityRepository;
 import com.brightstraining.springbootblogapplication.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,8 @@ public class UserAccountServiceImpl implements UserAccountService {
 
     @Override
     public void saveUser(UserAccount userAccount) {
+
+
         if (userAccount.getId() == null) {
             if (userAccount.getAuthorities().isEmpty()) {
                 Set<Authority> authorities = new HashSet<>();
@@ -38,8 +41,6 @@ public class UserAccountServiceImpl implements UserAccountService {
                 userAccount.setAuthorities(authorities);
             }
         }
-
-
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         this.userAccountRepository.save(userAccount);
     }
@@ -69,11 +70,9 @@ public class UserAccountServiceImpl implements UserAccountService {
         this.userAccountRepository.deleteById(id);
 
     }
-
     public Optional<UserAccount> findOneByEmail(String email) {
         return userAccountRepository.findOneByEmail(email);
     }
-
 
 
 }

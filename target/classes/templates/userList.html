@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Management - Metal Blog</title>
+      <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+</head>
+<body>
+
+<div class="container">
+    <div class="leftcolumn">
+        <h1>User Management - Metal Blog</h1>
+        <a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
+
+        <div sec:authorize="isAuthenticated()">
+                 <span sec:authorize="hasRole('ROLE_ADMIN')">
+
+                    <table th:unless = "${listOfUserAccounts.size() < 1}">
+                        <thead>
+                        <th>User First Name</th>
+                        <th>User Last Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>User Role</th>
+                        <th>Admin</th>
+
+                        </thead>
+                        <tbody>
+                        <tr th:each="user : ${listOfUserAccounts}">
+                            <td th:text="${user.firstName}"></td>
+                            <td th:text="${user.lastName}"></td>
+                            <td th:text="${user.userName}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.getAuthorities()}">Role</td>
+                            <td><a th:href="@{showFormForUpdate/{id}(id=${user.id})}" class="ahrefbutton">Update user</a></td>
+                        </tbody>
+                    </table>
+
+                 </span>
+            <a th:href="@{/posts}" class="ahrefbutton">Back to homepage</a>
+        </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/posts/register}" class="ahrefbutton">Register</a> <a th:href="@{/posts/login}" class="ahrefbutton">Login</a>
+
+            </div>
+
+
+
+    </div>
+</div>
+
+</body>
+</html>

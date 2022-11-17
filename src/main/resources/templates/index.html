@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:href="@{/css/style.css}" rel="stylesheet" />
-    <title>Tiny Blog - Homepage</title>
+    <title>Metal Blog - Homepage</title>
 
 
 </head>
@@ -19,18 +19,21 @@
 <!--                <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>-->
 
                 <div sec:authorize="isAuthenticated()">
-                <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>
-                    <div class="float: right">
+                    <span sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/posts/newpost}" class="ahrefbutton">Write a new post</a>
+                         <a th:href="@{/posts/useraccounts}" class="ahrefbutton">User Management</a>
+                    </span>
+
                     <form th:action="@{/posts/logout}" method="POST">
                             <label>Hi, <span sec:authentication="name">Username</span></label>
                         <button type="submit" class="button">Logout</button>
                     </form>
-                    </div>
+
                 </div>
 
 
             <div class="header">
-                <h1> Tiny Blog Posts</h1>
+                <h1>Metal Blog</h1>
             </div>
             <hr/>
 
@@ -52,7 +55,8 @@
 
         </div>
 
- </div>
 
-    </body>
+
+ </div>
+</body>
 </html>

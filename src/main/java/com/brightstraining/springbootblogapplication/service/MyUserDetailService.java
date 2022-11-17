@@ -8,12 +8,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Service
 @Component("userDetailService")
+
 public class MyUserDetailService implements UserDetailsService {
 
     //Overrides default spring security UserDetails as we will use the email as authenticator for login

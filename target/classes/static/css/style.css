@@ -49,6 +49,15 @@ a {
 	margin: 4px 2px;
 	cursor: pointer;
 }
+
+.select{
+	background-color: #00050f;
+	color: white;
+	margin: 4px 2px;
+	padding: 5px 5px;
+
+}
+
 .input[type="checkbox"] {
 	background-color: #000;
 	margin: 2px;
@@ -87,6 +96,19 @@ a {
 	border-radius: 5px;
 }
 
+.deletebutton {
+	background-color: #2e3233; /* inverted of lightgray */
+	color: #AAF2EF;
+	padding: 3px 3px;
+	margin: 3px 3px;
+	text-align: center;
+	text-decoration: none;
+	/*display: inline-block;*/
+	font-size: 12px;
+	border: 1px solid crimson;
+	border-radius: 5px;
+}
+
 .textarea {
 	width: 95%;
 	height: 300px;
@@ -98,6 +120,7 @@ a {
 	background-color: #0A0A0A;
 	resize: vertical;
 	color: white;
+	box-shadow: 5px 5px 5px #1060c2;
 }
 .textareasummary {
 	width: 95%;
@@ -110,6 +133,7 @@ a {
 	background-color: #0A0A0A;
 	resize: vertical;
 	color: white;
+	box-shadow: 5px 5px 5px #1060c2;
 }
 .textareatitle {
 	width: 95%;
@@ -122,6 +146,7 @@ a {
 	background-color: #0A0A0A;
 	resize: none;
 	color: white;
+	box-shadow: 5px 5px 5px #1060c2;
 }
 
 .loginform {
@@ -191,7 +216,7 @@ a {
 	color: #FBFBFB;
 	padding: 20px;
 	margin-top: 20px;
-	box-shadow: 5px 5px #380000;
+	box-shadow: 5px 5px 5px #6e2323;  /*380000*/
 }
 
 .post-container {
@@ -214,19 +239,19 @@ pre {
 	text-align: justify;
 }
 
-table, th, td {
-	/*border: 1px solid;*/
+.table, th, td {
+	border: 1px solid #870909;
 	/*background-color: #f2f2f2;*/
 	/*color: black;*/
 	/*border-color: blue;*/
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 	margin: 5px 0;
 	padding: 5px 5px;
 	font-size: 0.9em;
 	font-family: sans-serif;
 	/*min-width: 150px;*/
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-	background-color: #783105;  /*inverted of lightskyblue*/
+	box-shadow: 10px 10px 20px #1060c2;  /*rgba(0, 0, 0, 0.15)*/
+	background-color: #210404;  /*inverted of lightskyblue*/
 	color: white;
 	text-align: left;
 }
@@ -244,6 +269,25 @@ table, th, td {
 	border-radius: 4px;
 
 }
+
+.comments {
+	background-color: black;
+	color: #FBFBFB;
+	padding: 10px;
+	margin-top: 10px;
+	box-shadow: 5px 5px 5px #6e2323;
+
+}
+
+.comment {
+	background-color: #202020;
+	color: #FBFBFB;
+	padding: 10px;
+	margin-top: 10px;
+	box-shadow: 5px 5px 5px #6e2323;
+}
+
+
 
 .red {
 	color: red;

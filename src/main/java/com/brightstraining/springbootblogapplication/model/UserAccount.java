@@ -1,7 +1,5 @@
 package com.brightstraining.springbootblogapplication.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -12,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-@Data
 @Entity
 @Table(name = "users")   //will create table in mysql
 public class UserAccount {
@@ -34,7 +31,6 @@ public class UserAccount {
     private String email;
     @NotEmpty(message="Password cannot be empty")
     @NotNull
-    @Size(min = 6, max = 255, message = "Password should have between 6 and 10 letters or numbers")
     private String password;
 
     private String profileInfo;
@@ -48,7 +44,7 @@ public class UserAccount {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "useraccount_authority", joinColumns = {@JoinColumn(name = "userAccount_id", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+            inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
 

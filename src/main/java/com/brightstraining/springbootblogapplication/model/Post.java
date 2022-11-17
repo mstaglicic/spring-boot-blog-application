@@ -1,25 +1,21 @@
 package com.brightstraining.springbootblogapplication.model;
 
-import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
-@Data
+
 @Entity
 @Table(name = "posts")   //will create table in mysql
 public class Post {
 
     @Id  //this will be primary key
     @GeneratedValue(strategy = GenerationType.SEQUENCE)   //will be generated in database automatically
-    @Column(name = "id")
     private Long id;
     @NotEmpty(message="Title cannot be empty")
     @NotNull
-    @Column(name = "title", nullable = false)
     private String title;    //title of the post
     @Column(columnDefinition = "TEXT")
     private String content;  // entire text of the post
@@ -37,7 +33,6 @@ public class Post {
     private UserAccount userAccount;
 
     public Post(Set<Comment> comments) {
-
         this.comments = comments;
     }
 
@@ -49,7 +44,7 @@ public class Post {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,6 +94,14 @@ public class Post {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Collection<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override

@@ -24,7 +24,9 @@ public class WebSecurityConfig {
             "/posts/register",
             "/posts/login",
             "/css/*",
-            "/posts/*"
+            "/posts/*",
+            "/posts/showFormForUpdate",
+            "/posts/showFormForUpdate/*"
 
     };
 
@@ -33,7 +35,9 @@ public class WebSecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers(WHITELIST).permitAll()
-                .antMatchers(HttpMethod.GET, "/posts/*").permitAll()   //anyone should have access to read
+//                .antMatchers(HttpMethod.GET, "/posts/*").permitAll()   //anyone should have access to read
+//                .antMatchers("/newpost/**", "/updatePost/**", "/comment/**").hasRole("USER")
+                .antMatchers("/deletePost/**").hasRole("USER")
                 .anyRequest().authenticated();
 
         http
